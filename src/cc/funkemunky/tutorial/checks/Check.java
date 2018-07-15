@@ -26,7 +26,7 @@ public abstract class Check implements Listener {
         this.punishable = punishable;
         this.max = max;
 
-        Bukkit.getPluginManager().registerEvents(this, AntiCheat.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, AntiCheat.instance);
     }
 
     protected void flag(Player player, @Nullable String... information) {
@@ -37,11 +37,15 @@ public abstract class Check implements Listener {
                 formattedInfo.append(string).append(", ");
             }
             for(Player staff : Bukkit.getOnlinePlayers()) {
-                staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lAntiCheat&8] &e" + player.getName() + " &7has been detected for &e" + name + " &8[" + formattedInfo.toString() + "&8]" + "&8(&c" + violations + "&8)"));
+                if(staff.hasPermission("anticheat.staff")) {
+                    staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lAntiCheat&8] &e" + player.getName() + " &7has been detected for &e" + name + " &8[" + formattedInfo.toString() + "&8]" + "&8(&c" + violations + "&8)"));
+                }
             }
         } else {
             for(Player staff : Bukkit.getOnlinePlayers()) {
-                staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lAntiCheat&8] &e" + player.getName() + " &7has been detected for &e" + name + "&8(&c" + violations + "&8)"));
+                if(staff.hasPermission("anticheat.staff")) {
+                    staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&c&lAntiCheat&8] &e" + player.getName() + " &7has been detected for &e" + name + "&8(&c" + violations + "&8)"));
+                }
             }
         }
         if(violations > max) {
