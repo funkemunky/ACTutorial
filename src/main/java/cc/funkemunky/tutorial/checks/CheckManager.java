@@ -1,5 +1,6 @@
 package cc.funkemunky.tutorial.checks;
 
+import cc.funkemunky.tutorial.checks.combat.Pattern;
 import cc.funkemunky.tutorial.checks.movement.Speed;
 
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ public class CheckManager {
     private List<Check> checks = new ArrayList<>();
 
     public CheckManager() {
-        checks.add(new Speed());
+        //rchecks.add(new Speed());
+        checks.add(new Pattern("Pattern", CheckType.COMBAT, true, true, 10));
     }
     
     public List<Check> getChecks() {

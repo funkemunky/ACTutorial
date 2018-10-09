@@ -6,7 +6,6 @@ import cc.funkemunky.tutorial.checks.CheckType;
 import cc.funkemunky.tutorial.data.DataPlayer;
 import cc.funkemunky.tutorial.utilities.MathUtils;
 import cc.funkemunky.tutorial.utilities.PlayerUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffectType;
@@ -14,34 +13,35 @@ import org.bukkit.potion.PotionEffectType;
 public class Speed extends Check {
 
     public Speed() {
-        super("Speed", CheckType.MOVEMENT, true, true, 10);
+        super("Speed", CheckType.MOVEMENT, true, true, 15);
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e) {
-        DataPlayer data = AntiCheat.getInstance().getDataManager().getDataPlayer(e.getPlayer());
+    public void onPlayerMove(PlayerMoveEvent event) {
+        DataPlayer data = AntiCheat.getInstance().getDataManager().getDataPlayer(event.getPlayer());
 
-        if (data == null) {
+        if (data.player.getAllowFlight()
+                || data.player.isInsideVehicle()
+                || data.onClimbable
+                || (System.currentTimeMillis() - data.lastVelocityTaken) < 4000L) {
             return;
         }
+        double horizontal = MathUtils.getHorizontalDistance(event.getFrom(), event.getTo()),
+                threshold = data.airTicks > 0 ? 0.36 - (0.004 * Math.min(20, data.airTicks)) : 0.32 - (0.008 * Math.min(4, data.groundTicks));
 
-        float xDelta = MathUtils.getHorizontalDistance(e.getFrom(), e.getTo());
-        float threshold = (float) (data.airTicks > 0 ? data.airTicks > 6 ? 0.318 : 0.338 : data.groundTicks > 5 ? 0.287 : 0.32);
+        threshold = data.inLiquid ? 0.34 + (PlayerUtils.hasDepthStrider(data.player) * 0.02) : threshold;
+        threshold += data.iceTicks > 0 ? !data.onGround ? 0.22 : 0.06 : 0;
+        threshold += data.blockTicks > 0 ? 0.25 : 0;
+        threshold += data.onStairSlab ? 0.12 : 0;
+        threshold += PlayerUtils.getPotionEffectLevel(data.player, PotionEffectType.SPEED) * 0.035;
+        threshold += (data.player.getWalkSpeed() - 0.2) * 0.45;
 
-        threshold += PlayerUtils.getPotionEffectLevel(data.player, PotionEffectType.SPEED) * 0.06;
-        threshold += data.onIce ? data.underBlock ? 0.5f : .2f : 0f;
-        threshold += data.underBlock ? 0.4f : 0f;
-        threshold += data.onStairSlab ? 0.2f : 0f;
-
-        if (xDelta > threshold) {
-            if ((data.speedThreshold += 2) > 40) {
-                flag(data.player, xDelta + " > " + threshold);
+        if (horizontal > threshold) {
+            if ((data.speedThreshold += (horizontal - threshold > 0.145 ? 5 : 2)) > 30) {
+                flag(data.player, horizontal + ">-" + threshold);
+                data.speedThreshold = 10;
             }
-        } else if (data.speedThreshold > 0) {
-            data.speedThreshold--;
-        }
-
-        Bukkit.broadcastMessage(xDelta + ", " + threshold + ", " + data.speedThreshold + " (" + data.airTicks + ", " + data.groundTicks + ")");
-
+        } else data.speedThreshold = Math.max(0, data.speedThreshold - 1);
     }
+
 }

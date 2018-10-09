@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 
 public class MoveEvents implements Listener {
 
@@ -27,16 +28,31 @@ public class MoveEvents implements Listener {
                 data.onIce = PlayerUtils.isOnIce(player);
                 data.onClimbable = PlayerUtils.isOnClimbable(player);
                 data.underBlock = PlayerUtils.inUnderBlock(player);
-
-                if (data.onGround) {
+                
+                if(data.onGround) {
                     data.groundTicks++;
                     data.airTicks = 0;
                 } else {
                     data.airTicks++;
                     data.groundTicks = 0;
                 }
+                
+                data.iceTicks = Math.max(0, data.onIce ? data.iceTicks + 1  : data.iceTicks - 1);
+                data.liquidTicks = Math.max(0, data.inLiquid ? data.liquidTicks + 1  : data.liquidTicks - 1);
+                data.blockTicks = Math.max(0, data.underBlock ? data.blockTicks + 1  : data.blockTicks - 1);
             }
         }
-        Bukkit.broadcastMessage("test");
+    }
+
+    @EventHandler
+    public void onVelocity(PlayerVelocityEvent event) {
+        DataPlayer data = AntiCheat.getInstance().getDataManager().getDataPlayer(event.getPlayer());
+
+        if(data == null) {
+            return;
+        }
+        if(event.getVelocity().getY() > -0.078 || event.getVelocity().getY() < -0.08) {
+            data.lastVelocityTaken = System.currentTimeMillis();
+        }
     }
 }
