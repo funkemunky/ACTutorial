@@ -18,6 +18,9 @@ public class DataPlayer {
     public List<Float> patterns = Lists.newArrayList();
     public float lastRange;
 
+    /** Friction **/
+    public float lastDeltaXZ;
+
     /**
      * Thresholds
      **/
