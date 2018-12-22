@@ -66,7 +66,7 @@ public class Pattern extends Check {
             if(Math.abs(range - data.lastRange) < 4) {
                 flag(event.getPlayer(), Math.abs(range - data.lastRange) + "<-2");
             }
-            event.getPlayer().sendMessage("Range: " + range);
+            //event.getPlayer().sendMessage("Range: " + range);
 
             data.lastRange = range;
             data.patterns.clear();

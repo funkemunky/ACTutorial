@@ -10,8 +10,8 @@ public class DataPlayer {
 
     public Player player;
     public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock;
-    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks;
-    public long lastVelocityTaken, lastAttack;
+    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, killauraAVerbose;
+    public long lastVelocityTaken, lastAttack, lastFlying;
     public LivingEntity lastHitEntity;
 
     /** Pattern **/
