@@ -10,16 +10,17 @@ public class DataPlayer {
 
     public Player player;
     public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock;
-    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, killauraAVerbose;
-    public long lastVelocityTaken, lastAttack, lastFlying;
+    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks;
+    public long lastVelocityTaken, lastAttack;
     public LivingEntity lastHitEntity;
+
+    /** Killaura **/
+    public int killauraAVerbose;
+    public long lastFlying;
 
     /** Pattern **/
     public List<Float> patterns = Lists.newArrayList();
     public float lastRange;
-
-    /** Friction **/
-    public float lastDeltaXZ;
 
     /**
      * Thresholds
