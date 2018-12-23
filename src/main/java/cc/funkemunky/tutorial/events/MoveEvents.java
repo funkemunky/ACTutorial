@@ -28,7 +28,8 @@ public class MoveEvents implements Listener {
                 data.onIce = PlayerUtils.isOnIce(player);
                 data.onClimbable = PlayerUtils.isOnClimbable(player);
                 data.underBlock = PlayerUtils.inUnderBlock(player);
-                
+                data.onSlime = PlayerUtils.isOnSlime(player);
+
                 if(data.onGround) {
                     data.groundTicks++;
                     data.airTicks = 0;
@@ -40,6 +41,7 @@ public class MoveEvents implements Listener {
                 data.iceTicks = Math.max(0, data.onIce ? data.iceTicks + 1  : data.iceTicks - 1);
                 data.liquidTicks = Math.max(0, data.inLiquid ? data.liquidTicks + 1  : data.liquidTicks - 1);
                 data.blockTicks = Math.max(0, data.underBlock ? data.blockTicks + 1  : data.blockTicks - 1);
+                data.slimeTicks = Math.max(0, data.onSlime ? data.slimeTicks + 5 : data.slimeTicks - 1);
             }
         }
     }

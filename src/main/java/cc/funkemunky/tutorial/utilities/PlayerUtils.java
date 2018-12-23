@@ -13,6 +13,7 @@ public class PlayerUtils {
     public static boolean isOnGround(Player player) {
         return isOnGround(player, 0.25);
     }
+
     public static boolean isOnGround(Player player, double yExpanded) {
         Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, -yExpanded, 0,0,0,0);
 
@@ -39,6 +40,30 @@ public class PlayerUtils {
                     Block block = new Location(player.getWorld(), x, y, z).getBlock();
 
                     if(BlockUtils.isLiquid(block)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isOnSlime(Player player) {
+        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, -0.1f,0,0,0,0);
+
+        double minX = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "a"), box);
+        double minY = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "b"), box);
+        double minZ = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "c"), box);
+        double maxX = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "d"), box);
+        double maxY = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "e"), box);
+        double maxZ = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "f"), box);
+
+        for(double x = minX ; x < maxX ; x++) {
+            for(double y = minY ; y < maxY ; y++) {
+                for(double z = minZ ; z < maxZ ; z++) {
+                    Block block = new Location(player.getWorld(), x, y, z).getBlock();
+
+                    if(block.getType().toString().contains("SLIME")) {
                         return true;
                     }
                 }

@@ -9,8 +9,8 @@ import java.util.List;
 public class DataPlayer {
 
     public Player player;
-    public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock;
-    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks;
+    public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime;
+    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks;
     public long lastVelocityTaken, lastAttack;
     public LivingEntity lastHitEntity;
 
@@ -21,7 +21,6 @@ public class DataPlayer {
     /** Pattern **/
     public List<Float> patterns = Lists.newArrayList();
     public float lastRange;
-
     /**
      * Thresholds
      **/

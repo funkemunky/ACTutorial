@@ -4,12 +4,10 @@ import cc.funkemunky.tutorial.AntiCheat;
 import cc.funkemunky.tutorial.checks.Check;
 import cc.funkemunky.tutorial.checks.CheckType;
 import cc.funkemunky.tutorial.data.DataPlayer;
-import cc.funkemunky.tutorial.utilities.MathUtils;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import org.bukkit.Bukkit;
 
 public class KillauraA extends Check {
     public KillauraA(String name, CheckType type, boolean enabled, boolean punishable, int max) {
