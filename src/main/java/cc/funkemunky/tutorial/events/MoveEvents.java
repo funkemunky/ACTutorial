@@ -30,18 +30,20 @@ public class MoveEvents implements Listener {
                 data.underBlock = PlayerUtils.inUnderBlock(player);
                 data.onSlime = PlayerUtils.isOnSlime(player);
 
-                if(data.onGround) {
+                if(event.getPlayer().isOnGround()) {
                     data.groundTicks++;
                     data.airTicks = 0;
                 } else {
                     data.airTicks++;
                     data.groundTicks = 0;
                 }
-                
-                data.iceTicks = Math.max(0, data.onIce ? data.iceTicks + 1  : data.iceTicks - 1);
-                data.liquidTicks = Math.max(0, data.inLiquid ? data.liquidTicks + 1  : data.liquidTicks - 1);
-                data.blockTicks = Math.max(0, data.underBlock ? data.blockTicks + 1  : data.blockTicks - 1);
-                data.slimeTicks = Math.max(0, data.onSlime ? data.slimeTicks + 5 : data.slimeTicks - 1);
+
+                data.reduceVelocity();
+
+                data.iceTicks = Math.max(0, data.onIce ? Math.min(60, data.iceTicks + 3) : data.iceTicks - 1);
+                data.liquidTicks = Math.max(0, data.inLiquid ? Math.min(40, data.liquidTicks + 1)  : data.liquidTicks - 1);
+                data.blockTicks = Math.max(0, data.underBlock ? Math.min(60, data.blockTicks + 3)  : data.blockTicks - 1);
+                data.slimeTicks = Math.max(0, data.onSlime ? Math.min(data.slimeTicks + 8, 60) : data.slimeTicks - 1);
             }
         }
     }
@@ -56,5 +58,9 @@ public class MoveEvents implements Listener {
         if(event.getVelocity().getY() > -0.078 || event.getVelocity().getY() < -0.08) {
             data.lastVelocityTaken = System.currentTimeMillis();
         }
+
+        data.velXTicks = (int) Math.round(event.getVelocity().getX() * 100);
+        data.velXTicks = (int) Math.round(event.getVelocity().getY() * 100);
+        data.velXTicks = (int) Math.round(event.getVelocity().getZ() * 100);
     }
 }

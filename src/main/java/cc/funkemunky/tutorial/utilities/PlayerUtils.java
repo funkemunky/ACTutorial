@@ -49,7 +49,7 @@ public class PlayerUtils {
     }
 
     public static boolean isOnSlime(Player player) {
-        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, -0.1f,0,0,0,0);
+        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, -0.4f,0,0,0,0);
 
         double minX = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "a"), box);
         double minY = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "b"), box);
@@ -113,7 +113,7 @@ public class PlayerUtils {
     }
 
     public static boolean inUnderBlock(Player player) {
-        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, 0,0,0,1,0);
+        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, 1,0,0,0.5,0);
 
         double minX = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "a"), box);
         double minY = (double) ReflectionUtils.getInvokedField(ReflectionUtils.getField(box.getClass(), "b"), box);

@@ -10,7 +10,7 @@ public class DataPlayer {
 
     public Player player;
     public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime;
-    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks;
+    public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks, velXTicks, velYTicks, velZTicks;
     public long lastVelocityTaken, lastAttack;
     public LivingEntity lastHitEntity;
 
@@ -28,6 +28,16 @@ public class DataPlayer {
 
     public DataPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isVelocityTaken() {
+        return velXTicks > 0 || velYTicks > 0 || velZTicks > 0;
+    }
+
+    public void reduceVelocity() {
+        velXTicks = Math.max(0, velXTicks - 1);
+        velYTicks = Math.max(0,velYTicks - 1);
+        velZTicks = Math.max(0, velZTicks - 1);
     }
 
 }
