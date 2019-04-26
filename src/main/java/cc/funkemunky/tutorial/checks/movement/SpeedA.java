@@ -45,6 +45,6 @@ public class SpeedA extends Check {
             data.speedThreshold = Math.max(0, data.speedThreshold - 1);
         }
 
-        Bukkit.broadcastMessage(data.speedThreshold + ": " + deltaXZ + ">" + threshold + ", " + event.getPlayer().isOnGround());
+        //Bukkit.broadcastMessage(data.speedThreshold + ": " + deltaXZ + ">" + threshold + ", " + event.getPlayer().isOnGround());
     }
 }
