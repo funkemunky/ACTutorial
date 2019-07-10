@@ -1,0 +1,5 @@
+name: Tutorial
+main: me.funkemunky.anticheat.Main
+version: 1.0
+author: funkemunky
+depend: [Atlas]
