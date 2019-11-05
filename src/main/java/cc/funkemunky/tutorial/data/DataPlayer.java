@@ -12,7 +12,8 @@ import java.util.List;
 public class DataPlayer {
 
     public Player player;
-    public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime;
+    public Object boundingBox;
+    public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime, nearGround;
     public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks, velXTicks, velYTicks, velZTicks;
     public long lastVelocityTaken, lastAttack, lastServerKP, ping;
     public LivingEntity lastHitEntity;
@@ -25,11 +26,16 @@ public class DataPlayer {
     /** Pattern **/
     public List<Float> patterns = Lists.newArrayList();
     public float lastRange;
+
+    /** Fly **/
+    public float lastDeltaY, lastAccel;
+
     /**
      * Thresholds
      **/
     public int speedThreshold;
     public int reachThreshold;
+    public float flyThreshold;
 
     public DataPlayer(Player player) {
         this.player = player;

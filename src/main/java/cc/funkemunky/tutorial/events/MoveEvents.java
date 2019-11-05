@@ -3,6 +3,7 @@ package cc.funkemunky.tutorial.events;
 import cc.funkemunky.tutorial.AntiCheat;
 import cc.funkemunky.tutorial.data.DataPlayer;
 import cc.funkemunky.tutorial.utilities.PlayerUtils;
+import cc.funkemunky.tutorial.utilities.ReflectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,7 @@ import org.bukkit.event.player.PlayerVelocityEvent;
 
 public class MoveEvents implements Listener {
 
-    @EventHandler()
+    @EventHandler(priority = EventPriority.HIGH)
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (event.getFrom().getX() != event.getTo().getX()
@@ -29,6 +30,11 @@ public class MoveEvents implements Listener {
                 data.onClimbable = PlayerUtils.isOnClimbable(player);
                 data.underBlock = PlayerUtils.inUnderBlock(player);
                 data.onSlime = PlayerUtils.isOnSlime(player);
+
+                data.boundingBox = ReflectionUtils.getBoundingBox(event.getPlayer());
+                data.nearGround = ReflectionUtils.getCollidingBlocks(event.getPlayer(), ReflectionUtils
+                        .modifyBoundingBox(data.boundingBox, 0, -1,0,0,0,0))
+                        .size() > 0;
 
                 if(event.getPlayer().isOnGround()) {
                     data.groundTicks++;
