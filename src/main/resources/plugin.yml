@@ -1,6 +1,0 @@
-name: AnticheatTutorial
-main: me.funkemunky.tutorial.Anticheat
-version: ${project.version}
-authors: [funkemunky, yournamehere]
-api-version: "1.13"
-depend: [Atlas]
