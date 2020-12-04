@@ -4,7 +4,6 @@ import cc.funkemunky.tutorial.checks.combat.KillauraA;
 import cc.funkemunky.tutorial.checks.combat.Pattern;
 import cc.funkemunky.tutorial.checks.combat.Reach;
 import cc.funkemunky.tutorial.checks.movement.Fly;
-import cc.funkemunky.tutorial.checks.movement.NoFall;
 import cc.funkemunky.tutorial.checks.movement.SpeedA;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ public class CheckManager {
         checks.add(new SpeedA("Speed (A)", CheckType.MOVEMENT, true, true, 20));
         checks.add(new Reach("Reach", CheckType.COMBAT, true, true, 50));
         checks.add(new Fly("Fly", CheckType.MOVEMENT, true, true, 50));
-        checks.add(new NoFall("NoFall", CheckType.MOVEMENT, true, true, 20));
     }
     
     public List<Check> getChecks() {
