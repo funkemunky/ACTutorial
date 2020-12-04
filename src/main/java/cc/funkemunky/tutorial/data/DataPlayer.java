@@ -13,7 +13,8 @@ public class DataPlayer {
 
     public Player player;
     public Object boundingBox;
-    public boolean onGround, inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime, nearGround;
+    public boolean onGround,
+            inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime, nearGround;
     public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks, velXTicks, velYTicks, velZTicks;
     public long lastVelocityTaken, lastAttack, lastServerKP, ping;
     public LivingEntity lastHitEntity;
@@ -29,6 +30,9 @@ public class DataPlayer {
 
     /** Fly **/
     public float lastDeltaY, lastAccel;
+
+    /** NoFall **/
+    public boolean lServerGround = true; //player will most likely be on ground by default
 
     /**
      * Thresholds
