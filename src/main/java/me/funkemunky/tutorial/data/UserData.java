@@ -1,6 +1,5 @@
 package me.funkemunky.tutorial.data;
 
-import lombok.RequiredArgsConstructor;
 import me.funkemunky.tutorial.data.impl.CheckManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UserData {
-    public static Map<String, UserData> dataMap = Collections.synchronizedMap(new HashMap<>());
+    public static Map<Integer, UserData> dataMap = Collections.synchronizedMap(new HashMap<>());
 
     public final UUID uuid;
     private Player player;
@@ -25,18 +24,12 @@ public class UserData {
     }
 
     public static UserData getData(UUID uuid) {
-        return dataMap.computeIfAbsent(uuid.toString(), key -> {
-            UserData data = new UserData(uuid);
-
-            dataMap.put(key, data);
-
-            return data;
-        });
+        return dataMap.computeIfAbsent(uuid.hashCode(), key -> new UserData(uuid));
     }
 
     public Player getPlayer() {
         if(player == null) this.player = Bukkit.getPlayer(uuid);
-        if(player == null) dataMap.remove(uuid.toString());
+        if(player == null) dataMap.remove(uuid.hashCode());
 
         return player;
     }

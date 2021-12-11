@@ -1,5 +1,7 @@
 package me.funkemunky.tutorial.check;
 
+import cc.funkemunky.api.tinyprotocol.listener.PacketInfo;
+import cc.funkemunky.api.tinyprotocol.listener.functions.PacketListener;
 import cc.funkemunky.api.utils.Color;
 import cc.funkemunky.api.utils.MathUtils;
 import lombok.AllArgsConstructor;
@@ -14,12 +16,11 @@ import net.md_5.bungee.api.chat.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
 @RequiredArgsConstructor
 public abstract class Check {
 
-    protected String name;
-    protected CheckType type;
+    protected final String name;
+    protected final CheckType type;
     public float vl;
 
     public static List<UserData> alertsEnabled = new ArrayList<>();
@@ -63,9 +64,7 @@ public abstract class Check {
         });
     }
 
-    public abstract void receive(Object packet);
-
-    public abstract void send(Object packet);
+    public abstract void packetEvent(PacketInfo listener);
 
     static {
         lbracket.setColor(ChatColor.DARK_GRAY);
