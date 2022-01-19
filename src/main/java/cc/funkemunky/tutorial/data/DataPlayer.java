@@ -13,10 +13,11 @@ public class DataPlayer {
 
     public Player player;
     public Object boundingBox;
-    public boolean onGround,
+    public boolean onGround, clientGround, lastClientGround,
             inLiquid, onStairSlab, onIce, onClimbable, underBlock, onSlime, nearGround;
     public int airTicks, groundTicks, iceTicks, liquidTicks, blockTicks, slimeTicks, velXTicks, velYTicks, velZTicks;
     public long lastVelocityTaken, lastAttack, lastServerKP, ping;
+    public double walkSpeed = 0.2, lastWalkSpeed = 0.2, lastDeltaXZ;
     public LivingEntity lastHitEntity;
     public PastLocation entityPastLocations = new PastLocation();
 

@@ -14,15 +14,21 @@ import org.bukkit.event.player.PlayerVelocityEvent;
 
 public class MoveEvents implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    private static double blockGCD = 1 / 64.;
+
+    @EventHandler(priority = EventPriority.LOW)
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        DataPlayer data = AntiCheat.getInstance().getDataManager().getDataPlayer(player);
+        data.lastClientGround = data.clientGround;
+        data.clientGround = PlayerUtils.isOnGround(player, 0.5) && event.getTo().getY() % blockGCD < 0.0001;
         if (event.getFrom().getX() != event.getTo().getX()
                 || event.getFrom().getY() != event.getTo().getY()
                 || event.getFrom().getZ() != event.getTo().getZ()) {
-            DataPlayer data = AntiCheat.getInstance().getDataManager().getDataPlayer(player);
 
             if (data != null) {
+                data.lastWalkSpeed = data.walkSpeed;
+                data.walkSpeed = event.getPlayer().getWalkSpeed();
                 data.onGround = PlayerUtils.isOnGround(player);
                 data.onStairSlab = PlayerUtils.isInStairs(player);
                 data.inLiquid = PlayerUtils.isInLiquid(player);
